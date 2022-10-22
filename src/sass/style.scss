@@ -1,0 +1,44 @@
+/*PROJECT CSS*/
+@import url("https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap");
+//VARS
+$containerWidth: min(100% - 2rem, 60rem);
+$assetsPath: "../images/";
+$dark: #323031;
+$bright: #ffc857;
+$bright2: #ca2f2f;
+$main: #084c61;
+$main2: #177e89;
+$grid: #ccc;
+$font: "Kalam", cursive;
+body {
+    align-items: center;
+    background-color: $dark;
+    color: $bright;
+    display: flex;
+    flex-direction: column;
+    font-family: $font;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+@media only screen and (max-width: 700px) {
+   
+}
+@media only screen and (max-width: 500px) {
+    
+}
+@media only screen and (max-width: 400px) {
+   
+}
+@media only screen and (min-width: 960px) {
+}
+
+@media only screen and (min-width: 1280px) {
+}
+
+@media only screen and (min-width: 1920px) {
+}
