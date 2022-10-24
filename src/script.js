@@ -1,20 +1,9 @@
 // app Calculator
 const app = () => {
-    // init variables/
-
-
     // UI elememts
 
-
-    const btnCorrect = document.getElementById('correct');
-    const btnClear = document.getElementById('clear');
-
-
     const display = document.querySelector(".output");
-
     const allButtons = document.querySelectorAll('#calculator button');
-
-
 
     // for each buttons add to input
     allButtons.forEach(button => button.addEventListener('click', (e) => {
@@ -29,9 +18,7 @@ const app = () => {
         // update state of calculator and visual
         display.textContent = resultString;
         updateCalculatorState(key, calculator, resultString, displayedNum);
-        updateVisualState(key, calculator);
-
-
+        updateVisualState(key, calculator,displayedNum);
     }));
     const getKeyType = (key) => {
         const { action } = key.dataset
@@ -99,8 +86,6 @@ const app = () => {
             } else {
                 return displayedNum;
             }
-
-
         }
     }
     const updateCalculatorState = (key, calculator, calcValue, displayedNum) => {
@@ -137,6 +122,15 @@ const app = () => {
             calculator.dataset.modValue = secondValue;
         }
 
+    
+    }
+    const updateVisualState = (key, calculator,displayedNum) => {
+        const keyType = getKeyType(key);
+        // remove active state on operator btn
+        Array.from(key.parentNode.children).forEach(k => k.classList.remove('active'));
+        // add active class to operator button 
+        if (keyType === 'operator') key.classList.add('active');
+
         if (keyType === 'clear') {
             display.innerText = "0";
             delete calculator.dataset.firstValue;
@@ -146,7 +140,6 @@ const app = () => {
             console.log("clear");
         }
         if (keyType === 'correct') {
-            console.log("displayedNum.length "+displayedNum.length );
             if (displayedNum.length > 1) {
                 display.innerText = displayedNum.substring(0, displayedNum.length - 1);
             }else{
@@ -154,52 +147,8 @@ const app = () => {
             }
         }
     }
-    const updateVisualState = (key, calculator) => {
-        const keyType = getKeyType(key);
-        // remove active state on operator btn
-        Array.from(key.parentNode.children).forEach(k => k.classList.remove('active'));
-        // add custom attribute to calculator
-        if (keyType === 'operator') key.classList.add('active');
-    }
 
-    //when operator button call operateButtons
-    //operatorButtons.forEach(button => button.addEventListener('click', operatesButton));
-
-    // btnEqual.addEventListener('click', calc);
-    //btnClear.addEventListener('click', clear);
-    //btnCorrect.addEventListener('click', correct);
-
-    // function operatesButton(e) {
-    //     const input = e.target.innerText;
-    //     console.log("operatesButton dataset:" + input);
-    //     console.log("input" + e.target.innerText);
-    //     if (
-    //         outputTop.innerText.includes('+') ||
-    //         outputTop.innerText.includes('*') ||
-    //         outputTop.innerText.includes('-') ||
-    //         outputTop.innerText.includes('/')
-    //     ) {
-    //         console.log('go calc()');
-    //         calc();
-    //     }
-    //     outputTop.innerText += input;
-    //     console.log("outputTop.innerText" + outputTop.innerText);
-    // }
-
-
-
-    // function calc() {
-    //     //arrondi le result
-    //     let store = getValue(outputTop.innerText);
-    //     if (store == null) {
-    //         return null;
-    //     } else {
-    //         outputTop.innerText = Math.floor(store * 10000) / 10000;
-    //         display.innerText = Math.floor(store * 10000) / 10000;
-
-    //     }
-
-    // }
+    
 
     // do the math between 2 numbers
     function operate(operator, number1, number2) {
@@ -229,56 +178,6 @@ const app = () => {
         // we round the result to a certain limit so the number can be displayed on screen
         return Math.round(result * Math.pow(10, decToRound)) / Math.pow(10, decToRound);
     }
-
-    // function getValue(formula) {
-    //     console.log("formula:" + formula);
-    //     if (formula.includes('+')) {
-    //         const splitvalues = formula.split('+');
-    //         console.log("splitvalues[0], splitvalues[1]:" + splitvalues[0] + "," + splitvalues[1]);
-    //         return operate('add', splitvalues[0], splitvalues[1]);
-
-    //     }
-    //     if (formula.includes('*')) {
-    //         const splitvalues = formula.split('*');
-    //         console.log("splitvalues[0], splitvalues[1]:" + splitvalues[0] + "," + splitvalues[1]);
-    //         return operate('multiply', splitvalues[0], splitvalues[1]);
-    //     }
-    //     if (formula.includes('-')) {
-    //         const splitvalues = formula.split('-');
-    //         console.log("splitvalues[0], splitvalues[1]:" + splitvalues[0] + "," + splitvalues[1]);
-    //         return operate('substract', splitvalues[0], splitvalues[1]);
-    //     }
-    //     if (formula.includes('/')) {
-    //         const splitvalues = formula.split('/');
-    //         console.log("splitvalues[0], splitvalues[1]:" + splitvalues[0] + "," + splitvalues[1]);
-    //         return operate('divide', splitvalues[0], splitvalues[1]);
-    //     }
-
-    // }
-
-    function clear() {
-        outputTop.innerText = "";
-        display.innerText = "0";
-        delete calculator.dataset.firstValue;
-        delete calculator.dataset.previousKeyType;
-        delete calculator.dataset.operator;
-        delete calculator.dataset.modValue;
-        console.log("clear");
-    }
-    // function correct() {
-    //     if (display.innerText.length > 0) {
-    //         display.innerText = display.innerText.slice(0, -1);
-    //     }
-
-
-    //     console.log("correct");
-    // }
-
-    console.log(operate('+', 2, 3));
-    console.log(operate('/', 2, 3));
-    console.log(operate('*', 2, 3));
-    console.log(operate('-', 2, 3));
-
 
 }
 
