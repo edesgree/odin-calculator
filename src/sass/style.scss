@@ -61,8 +61,8 @@ main {
             grid-template:
                 "clear correct power divide"
                 "seven eigth nine multiply"
-                "four five six minus"
-                "one two three plus"
+                "four five six substract"
+                "one two three add"
                 "plus-minus zero decimal equal";
             height: 350px;
             // grid-template-columns: repeat(4, 1fr);
@@ -79,7 +79,7 @@ main {
                     background-image: url("#{$assetsPath}correction.svg");
                     background-size: 38px;
                 }
-
+                
                 /* Buttons positions */
                 &#number-0 {
                     grid-area: zero;
@@ -117,11 +117,11 @@ main {
                 &#equal {
                     grid-area: equal;
                 }
-                &#plus {
-                    grid-area: plus;
+                &#add {
+                    grid-area: add;
                 }
-                &#minus {
-                    grid-area: minus;
+                &#substract {
+                    grid-area: substract;
                 }
                 &#multiply {
                     grid-area: multiply;
@@ -176,6 +176,10 @@ button,
     }
     &:disabled {
         background: grey;
+    }
+    &.active{
+        background: lighten($bright, 20%);
+
     }
 }
 @media only screen and (max-width: 700px) {

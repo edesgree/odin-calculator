@@ -46,7 +46,7 @@ main .calculator .buttons {
   display: grid;
   font-size: 20px;
   grid-gap: 10px;
-  grid-template: "clear correct power divide" "seven eigth nine multiply" "four five six minus" "one two three plus" "plus-minus zero decimal equal";
+  grid-template: "clear correct power divide" "seven eigth nine multiply" "four five six substract" "one two three add" "plus-minus zero decimal equal";
   height: 350px;
 }
 main .calculator .buttons button {
@@ -100,11 +100,11 @@ main .calculator .buttons button#decimal {
 main .calculator .buttons button#equal {
   grid-area: equal;
 }
-main .calculator .buttons button#plus {
-  grid-area: plus;
+main .calculator .buttons button#add {
+  grid-area: add;
 }
-main .calculator .buttons button#minus {
-  grid-area: minus;
+main .calculator .buttons button#substract {
+  grid-area: substract;
 }
 main .calculator .buttons button#multiply {
   grid-area: multiply;
@@ -159,4 +159,8 @@ button:active,
 button:disabled,
 .btn:disabled {
   background: grey;
+}
+button.active,
+.btn.active {
+  background: #ffeaa1;
 }
