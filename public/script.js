@@ -1,7 +1,7 @@
 // app Calculator
 const app = () => {
     // init variables/
-    const result = 0;
+
 
     // UI elememts
     const displayElement = document.getElementById('display');
@@ -23,13 +23,13 @@ const app = () => {
     // const btnPercentage = document.getElementById('percentage');
     // const btnPlusMinus = document.getElementById('plus-minus');
     // const btnCorrect = document.getElementById('correct');
-     const btnClear = document.getElementById('clear');
+    const btnClear = document.getElementById('clear');
     // const btnDecimal = document.getElementById('decimal');
     // const btnPower = document.getElementById('power');
-     const btnEqual = document.getElementById('equal');
+    const btnEqual = document.getElementById('equal');
     const buttons = document.querySelectorAll(".buttons");
     const output = document.querySelector(".result");
-    const outputTop = document.querySelector(".equasion");
+    const outputTop = document.querySelector(".last-output");
     const operatorsButtons = document.querySelectorAll(".operators");
 
     const allButtons = document.querySelectorAll('[data-type=number],[data-type=operator]');
@@ -41,17 +41,17 @@ const app = () => {
     allButtons.forEach(button => button.addEventListener('click', (e) => {
         const input = e.target.dataset.value;
         outputTop.innerText += input;
-
     }));
     //when operator button call operateButtons
     operatorButtons.forEach(button => button.addEventListener('click', operatesButton));
-    
-    btnEqual.addEventListener('click',calc);
-    btnClear.addEventListener('click',clear);
-    
+
+    btnEqual.addEventListener('click', calc);
+    btnClear.addEventListener('click', clear);
+
     function operatesButton(e) {
         const input = e.target.dataset.value;
-        console.log("input"+input);
+        console.log("operatesButton dataset:"+input);
+        console.log("input" + input);
         if (
             outputTop.innerText.includes('+') ||
             outputTop.innerText.includes('*') ||
@@ -60,9 +60,9 @@ const app = () => {
         ) {
             console.log('go calc()');
             calc();
-        } 
-            outputTop.innerText += input;
-        
+        }
+        outputTop.innerText += input;
+
     }
     // get value , split en fonction du operator return operate(+,1,2)
     // operate (+,1,2)
@@ -103,36 +103,36 @@ const app = () => {
         return result;
     }
     function getValue(formula) {
-        console.log(formula);
+        console.log("formula:"+formula);
         if (formula.includes('+')) {
             const splitvalues = formula.split('+');
-            console.log('formula.includes + ' + formula);
+            
             return operate('+', splitvalues[0], splitvalues[1]);
 
         }
         if (formula.includes('*')) {
             const splitvalues = formula.split('*');
-            console.log('formula.includes * ' + formula);
+            
             return operate('*', splitvalues[0], splitvalues[1]);
         }
         if (formula.includes('-')) {
             const splitvalues = formula.split('-');
-            console.log('formula.includes - ' + formula);
+            
             return operate('-', splitvalues[0], splitvalues[1]);
         }
         if (formula.includes('/')) {
             const splitvalues = formula.split('/');
-            console.log('formula.includes / ' + formula);
+            
             return operate('/', splitvalues[0], splitvalues[1]);
         }
-        
+
     }
 
-function clear(e){
-    outputTop.innerText ="";
-    output.innerText ="";
-    console.log("clear");
-}
+    function clear() {
+        outputTop.innerText = "";
+        output.innerText = "";
+        console.log("clear");
+    }
 
     console.log(operate('+', 2, 3));
     console.log(operate('/', 2, 3));
