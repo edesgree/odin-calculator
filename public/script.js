@@ -4,23 +4,8 @@ const app = () => {
 
 
     // UI elememts
-    const displayElement = document.getElementById('display');
-    // const btnNumber0 = document.getElementById('number-0');
-    // const btnNumber1 = document.getElementById('number-1');
-    // const btnNumber2 = document.getElementById('number-2');
-    // const btnNumber3 = document.getElementById('number-3');
-    // const btnNumber4 = document.getElementById('number-4');
-    // const btnNumber5 = document.getElementById('number-5');
-    // const btnNumber6 = document.getElementById('number-6');
-    // const btnNumber7 = document.getElementById('number-7');
-    // const btnNumber8 = document.getElementById('number-8');
-    // const btnNumber9 = document.getElementById('number-9');
-    // const btnPlus = document.getElementById('plus');
-    // const btnMinus = document.getElementById('minus');
-    // const btnMultiply = document.getElementById('multiply');
-    // const btnDivide = document.getElementById('divide');
-    // const btnPercentage = document.getElementById('percentage');
-    // const btnPlusMinus = document.getElementById('plus-minus');
+
+    
     const btnCorrect = document.getElementById('correct');
     const btnClear = document.getElementById('clear');
     // const btnDecimal = document.getElementById('decimal');
@@ -43,11 +28,12 @@ const app = () => {
         const displayedNum = display.textContent;
         const previousKeyType = calculator.dataset.previousKeyType;
 
-        console.log(button);
-        console.log(key);
+      
+        
         // save the keytype in a dataset on #calculator
         calculator.dataset.previousKeyType = button.dataset.type;
-        if (key.dataset.type === "number") {
+
+        if (!action) {
            
             if (displayedNum === '0' || previousKeyType === 'operator' || previousKeyType === 'calculate') {
                 //console.log("displayedNum is 0");
@@ -167,22 +153,28 @@ const app = () => {
 
         const num1 = Number(number1);
         const num2 = Number(number2);
+        const decToRound = 12;
+        let result="";
         if (operator === "divide") {
+           
+           
             // impossible to divide by 0
             if (num2 === 0) {
                 return null;
             }
-            return num1 / num2;
+            result= num1 / num2;
         }
         if (operator === "multiply") {
-            return num1 * num2;
+            result= num1 * num2;
         }
         if (operator === "add") {
-            return num1 + num2;
+            result= num1 + num2;
         }
         if (operator === "substract") {
-            return num1 - num2;
+            result= num1 - num2;
         }
+        // we round the result to a certain limit so the number can be displayed on screen
+        return Math.round(result * Math.pow(10, decToRound)) / Math.pow(10, decToRound);
     }
 
     // function getValue(formula) {
