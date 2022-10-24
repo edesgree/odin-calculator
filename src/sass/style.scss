@@ -4,12 +4,14 @@
 $containerWidth: min(100% - 2rem, 60rem);
 $assetsPath: "../images/";
 $dark: #323031;
-$bright: #ffc857;
+$bright: #ffd43b;
 $bright2: #ca2f2f;
 $main: #084c61;
 $main2: #177e89;
 $grid: #ccc;
+$light: #fff;
 $font: "Kalam", cursive;
+$border-radius: 10px;
 body {
     align-items: center;
     background-color: $dark;
@@ -25,14 +27,149 @@ body {
     box-sizing: border-box;
 }
 
+main {
+    .calculator {
+        background: $main2;
+        border-radius: $border-radius;
+        padding: 2em;
+        width: 400px;
+        .display {
+            background-color: $dark;
+            border-radius: $border-radius;
+            font-size: 3em;
+            margin-bottom: 20px;
+            padding: 4px 8px;
+            text-align: right;
+        }
+        .buttons {
+            display: grid;
+            font-size: 20px;
+            grid-gap: 10px;
+            grid-template:
+                "clear correct power divide"
+                "seven eigth nine multiply"
+                "four five six minus"
+                "one two three plus"
+                "plus-minus zero decimal equal";
+            height: 350px;
+            // grid-template-columns: repeat(4, 1fr);
+            button {
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: contain;
+                font-size: 21px;
+                &.btn-clear {
+                    background-image: url("#{$assetsPath}delete.svg");
+                    background-size: 28px;
+                }
+                &.btn-correct {
+                    background-image: url("#{$assetsPath}correction.svg");
+                    background-size: 38px;
+                }
+
+                /* Buttons positions */
+                &#number-0 {
+                    grid-area: zero;
+                }
+                &#number-1 {
+                    grid-area: one;
+                }
+                &#number-2 {
+                    grid-area: two;
+                }
+                &#number-3 {
+                    grid-area: three;
+                }
+                &#number-4 {
+                    grid-area: four;
+                }
+                &#number-5 {
+                    grid-area: five;
+                }
+                &#number-6 {
+                    grid-area: six;
+                }
+                &#number-7 {
+                    grid-area: seven;
+                }
+                &#number-8 {
+                    grid-area: eigth;
+                }
+                &#number-9 {
+                    grid-area: nine;
+                }
+                &#decimal {
+                    grid-area: decimal;
+                }
+                &#equal {
+                    grid-area: equal;
+                }
+                &#plus {
+                    grid-area: plus;
+                }
+                &#minus {
+                    grid-area: minus;
+                }
+                &#multiply {
+                    grid-area: multiply;
+                }
+                &#divide {
+                    grid-area: divide;
+                }
+                &#power {
+                    grid-area: power;
+                }
+                &#correct {
+                    grid-area: correct;
+                }
+                &#clear {
+                    grid-area: clear;
+                }
+                &#plus-minus {
+                    grid-area: plus-minus;
+                }
+                &#percentage {
+                    display: none;
+                    grid-area: percentage;
+                }
+            }
+        }
+    }
+}
+button,
+.btn {
+    background: $bright;
+    border-color: $main;
+    border-radius: $border-radius;
+    border-style: solid;
+    border-width: 0.125em;
+    box-shadow: 0 0.375em 0 currentColor;
+    color: $dark;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 600;
+    position: relative;
+    text-align: center;
+
+    vertical-align: middle;
+    &:hover {
+        background: $light;
+        cursor: pointer;
+    }
+    &:active {
+        background: darken($bright, 20%);
+        box-shadow: none;
+        top: 0.375em;
+    }
+    &:disabled{
+        background:grey;
+    }
+}
 @media only screen and (max-width: 700px) {
-   
 }
 @media only screen and (max-width: 500px) {
-    
 }
 @media only screen and (max-width: 400px) {
-   
 }
 @media only screen and (min-width: 960px) {
 }

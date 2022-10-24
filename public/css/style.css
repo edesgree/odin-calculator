@@ -3,7 +3,7 @@
 body {
   align-items: center;
   background-color: #323031;
-  color: #ffc857;
+  color: #ffd43b;
   display: flex;
   flex-direction: column;
   font-family: "Kalam", cursive;
@@ -13,4 +13,137 @@ body {
 *:before,
 *:after {
   box-sizing: border-box;
+}
+
+main .calculator {
+  background: #177e89;
+  border-radius: 10px;
+  padding: 2em;
+  width: 400px;
+}
+main .calculator .display {
+  background-color: #323031;
+  border-radius: 10px;
+  font-size: 3em;
+  margin-bottom: 20px;
+  padding: 4px 8px;
+  text-align: right;
+}
+main .calculator .buttons {
+  display: grid;
+  font-size: 20px;
+  grid-gap: 10px;
+  grid-template: "clear correct power divide" "seven eigth nine multiply" "four five six minus" "one two three plus" "plus-minus zero decimal equal";
+  height: 350px;
+}
+main .calculator .buttons button {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  font-size: 21px;
+  /* Buttons positions */
+}
+main .calculator .buttons button.btn-clear {
+  background-image: url("../images/delete.svg");
+  background-size: 28px;
+}
+main .calculator .buttons button.btn-correct {
+  background-image: url("../images/correction.svg");
+  background-size: 38px;
+}
+main .calculator .buttons button#number-0 {
+  grid-area: zero;
+}
+main .calculator .buttons button#number-1 {
+  grid-area: one;
+}
+main .calculator .buttons button#number-2 {
+  grid-area: two;
+}
+main .calculator .buttons button#number-3 {
+  grid-area: three;
+}
+main .calculator .buttons button#number-4 {
+  grid-area: four;
+}
+main .calculator .buttons button#number-5 {
+  grid-area: five;
+}
+main .calculator .buttons button#number-6 {
+  grid-area: six;
+}
+main .calculator .buttons button#number-7 {
+  grid-area: seven;
+}
+main .calculator .buttons button#number-8 {
+  grid-area: eigth;
+}
+main .calculator .buttons button#number-9 {
+  grid-area: nine;
+}
+main .calculator .buttons button#decimal {
+  grid-area: decimal;
+}
+main .calculator .buttons button#equal {
+  grid-area: equal;
+}
+main .calculator .buttons button#plus {
+  grid-area: plus;
+}
+main .calculator .buttons button#minus {
+  grid-area: minus;
+}
+main .calculator .buttons button#multiply {
+  grid-area: multiply;
+}
+main .calculator .buttons button#divide {
+  grid-area: divide;
+}
+main .calculator .buttons button#power {
+  grid-area: power;
+}
+main .calculator .buttons button#correct {
+  grid-area: correct;
+}
+main .calculator .buttons button#clear {
+  grid-area: clear;
+}
+main .calculator .buttons button#plus-minus {
+  grid-area: plus-minus;
+}
+main .calculator .buttons button#percentage {
+  display: none;
+  grid-area: percentage;
+}
+
+button,
+.btn {
+  background: #ffd43b;
+  border-color: #084c61;
+  border-radius: 10px;
+  border-style: solid;
+  border-width: 0.125em;
+  box-shadow: 0 0.375em 0 currentColor;
+  color: #323031;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 600;
+  position: relative;
+  text-align: center;
+  vertical-align: middle;
+}
+button:hover,
+.btn:hover {
+  background: #fff;
+  cursor: pointer;
+}
+button:active,
+.btn:active {
+  background: #d4a500;
+  box-shadow: none;
+  top: 0.375em;
+}
+button:disabled,
+.btn:disabled {
+  background: grey;
 }
