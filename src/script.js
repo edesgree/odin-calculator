@@ -5,7 +5,7 @@ const app = () => {
 
     // UI elememts
 
-    
+
     const btnCorrect = document.getElementById('correct');
     const btnClear = document.getElementById('clear');
     // const btnDecimal = document.getElementById('decimal');
@@ -17,7 +17,6 @@ const app = () => {
 
     const allButtons = document.querySelectorAll('#calculator button');
     const numberButtons = document.querySelectorAll('[data-type=number]');
-    const operatorButtons = document.querySelectorAll('[data-type=operator]');
     console.log(numberButtons);
 
     // for each buttons add to input
@@ -27,88 +26,138 @@ const app = () => {
         const keyContent = key.textContent;
         const displayedNum = display.textContent;
         const previousKeyType = calculator.dataset.previousKeyType;
+        // call function to display result in screen
+        const resultString = createResultString(key, displayedNum, calculator.dataset);
 
-      
-        
-        // save the keytype in a dataset on #calculator
-        calculator.dataset.previousKeyType = button.dataset.type;
+        // update state of calculator and visual
+        display.textContent = resultString;
+        updateCalculatorState(key, calculator, resultString, displayedNum);
+        updateVisualState(key, calculator);
 
-        if (!action) {
-           
-            if (displayedNum === '0' || previousKeyType === 'operator' || previousKeyType === 'calculate') {
-                //console.log("displayedNum is 0");
-                display.textContent = keyContent;
-            } else {
 
-                display.textContent = displayedNum + keyContent;
+    }));
+    const getKeyType = (key) => {
+        const { action } = key.dataset
+        if (!action) return 'number'
+        if (
+            action === 'add' ||
+            action === 'subtract' ||
+            action === 'multiply' ||
+            action === 'divide'
+        ) return 'operator'
+        // For everything else, return the action
+        return action
+    }
+    const createResultString = (key, displayedNum, state) => {
+        const keyType = getKeyType(key);
 
-            }
+        const keyContent = key.textContent;
+        const modValue = state.modValue;
+        const previousKeyType = state.previousKeyType;
 
+
+        // if click on number
+        if (keyType === 'number') {
+            return (displayedNum === '0' ||
+                previousKeyType === 'operator' ||
+                previousKeyType === 'calculate')
+                ? keyContent
+                : displayedNum + keyContent;
         }
-        if (action) {
-            console.log("click action: " + action);
-        }
 
-        if (action === 'decimal') {
-            // console.log("decimal");
-            // console.log("displayedNum" + displayedNum);
-            // console.log("previousKeyType" + previousKeyType);
+        // if decimal button
+        if (keyType === 'decimal') {
             if (!displayedNum.includes('.')) {
-                display.textContent = displayedNum + '.';
-                
+                return displayedNum + '.';
             }
             if (previousKeyType === 'operator' || previousKeyType === 'calculate') {
-                
-                display.textContent = '0.';
+                return '0.';
             }
-
+            return displayedNum
         }
-        if (action === 'add' || action === 'substract' || action === 'multiply' || action === 'divide') {
-            // add active state on operator btn
 
+        // operator buttons
+        if (keyType === 'operator') {
             const firstValue = calculator.dataset.firstValue
             const operator = calculator.dataset.operator
-            const secondValue = displayedNum
 
             // Note: It's sufficient to check for firstValue and operator because secondValue always exists
-            if (firstValue && operator && previousKeyType !== 'operator' && previousKeyType !== 'calculate') {
-                const calcValue = operate(operator, firstValue, secondValue);
-
-                display.textContent = calcValue;
-
-                //update calculated value as firstValue
-                calculator.dataset.firstValue = calcValue;
-            } else {
-                // if the are no calculations, set displayedNum as the first value
-                calculator.dataset.firstValue = displayedNum;
-
-            }
-            // add custom attribute to calculator
-            key.classList.add('active');
-            calculator.dataset.firstValue = displayedNum;
-            calculator.dataset.operator = action;
+            return firstValue &&
+                operator &&
+                previousKeyType !== 'operator' &&
+                previousKeyType !== 'calculate'
+                ? operate(operator, firstValue, displayedNum)
+                : displayedNum;
         }
-        // remove active state on operator btn
-        Array.from(key.parentNode.children).forEach(k => k.classList.remove('active'))
 
-        //calculate
-        if (action === 'calculate') {
-            console.log('calculate!');
+        // calculate button
+        if (keyType === 'calculate') {
             let firstValue = calculator.dataset.firstValue;
             const operator = calculator.dataset.operator;
             let secondValue = displayedNum;
             if (firstValue) {
-                if (previousKeyType === 'calculate') {
-                    firstValue = displayedNum;
+                return (previousKeyType === 'calculate')
+                    ? operate(operator, displayedNum, modValue)
+                    : operate(operator, firstValue, displayedNum)
+            } else {
+                return displayedNum;
+            }
+
+
+        }
+    }
+    const updateCalculatorState = (key, calculator, calcValue, displayedNum) => {
+
+        const keyType = getKeyType(key);
+        const {
+            firstValue,
+            operator,
+            modValue,
+            previousKeyType
+          } = calculator.dataset
+        // save the keytype in a dataset on #calculator
+        calculator.dataset.previousKeyType = keyType;
+
+        if (keyType === 'number') { /* ... */ }
+        if (keyType === 'decimal') { /* ... */ }
+        if (keyType === 'operator') {
+            
+
+            calculator.dataset.operator = key.dataset.action;
+
+            // Note: It's sufficient to check for firstValue and operator because secondValue always exists
+
+            calculator.dataset.firstValue =
+                (firstValue && operator && previousKeyType !== 'operator' && previousKeyType !== 'calculate')
+                    //update calculated value as firstValue
+                    ? calcValue
+                    // if the are no calculations, set displayedNum as the first value
+                    : displayedNum;
+
+        }
+        if (keyType === 'clear') { /* ... */ }
+        if (keyType === 'calculate') {
+            
+            let secondValue = displayedNum;
+            if (firstValue) {
+                
                     secondValue = calculator.dataset.modValue;
-                }
-                display.textContent = operate(operator, firstValue, secondValue);
+                
             }
             // set modValue attribute
             calculator.dataset.modValue = secondValue;
 
+
         }
-    }));
+    }
+    const updateVisualState = (key, calculator) => {
+        const keyType = getKeyType(key);
+        // remove active state on operator btn
+        Array.from(key.parentNode.children).forEach(k => k.classList.remove('active'));
+        // add custom attribute to calculator
+        if (keyType === 'operator') key.classList.add('active');
+    }
+
     //when operator button call operateButtons
     //operatorButtons.forEach(button => button.addEventListener('click', operatesButton));
 
@@ -154,24 +203,24 @@ const app = () => {
         const num1 = Number(number1);
         const num2 = Number(number2);
         const decToRound = 12;
-        let result="";
+        let result = "";
         if (operator === "divide") {
-           
-           
+
+
             // impossible to divide by 0
             if (num2 === 0) {
                 return null;
             }
-            result= num1 / num2;
+            result = num1 / num2;
         }
         if (operator === "multiply") {
-            result= num1 * num2;
+            result = num1 * num2;
         }
         if (operator === "add") {
-            result= num1 + num2;
+            result = num1 + num2;
         }
         if (operator === "substract") {
-            result= num1 - num2;
+            result = num1 - num2;
         }
         // we round the result to a certain limit so the number can be displayed on screen
         return Math.round(result * Math.pow(10, decToRound)) / Math.pow(10, decToRound);
