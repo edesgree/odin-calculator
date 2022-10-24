@@ -2,8 +2,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap");
 body {
   align-items: center;
-  background-color: #4158D0;
-  background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+  background-color: #4158d0;
+  background-image: linear-gradient(43deg, #4158d0 0%, #c850c0 46%, #ffcc70 100%);
   color: #ffd43b;
   display: flex;
   flex-direction: column;
@@ -31,8 +31,15 @@ main .calculator .display {
   padding: 4px 8px;
   text-align: right;
 }
-main .calculator .display .last-output {
+main .calculator .display .output {
+  height: 40px;
+  line-height: 40px;
+  vertical-align: middle;
+}
+main .calculator .display .history {
   font-size: 0.5em;
+  height: 30px;
+  line-height: 1.5em;
   text-align: left;
 }
 main .calculator .buttons {

@@ -5,7 +5,6 @@ const app = () => {
 
     // UI elememts
     const displayElement = document.getElementById('display');
-    let formula = displayElement.innerText;
     // const btnNumber0 = document.getElementById('number-0');
     // const btnNumber1 = document.getElementById('number-1');
     // const btnNumber2 = document.getElementById('number-2');
@@ -22,24 +21,23 @@ const app = () => {
     // const btnDivide = document.getElementById('divide');
     // const btnPercentage = document.getElementById('percentage');
     // const btnPlusMinus = document.getElementById('plus-minus');
-     const btnCorrect = document.getElementById('correct');
+    const btnCorrect = document.getElementById('correct');
     const btnClear = document.getElementById('clear');
     // const btnDecimal = document.getElementById('decimal');
     // const btnPower = document.getElementById('power');
     const btnEqual = document.getElementById('equal');
-    const buttons = document.querySelectorAll(".buttons");
-    const output = document.querySelector(".result");
-    const outputTop = document.querySelector(".last-output");
-    const operatorsButtons = document.querySelectorAll(".operators");
+    
+    const output = document.querySelector(".output");
+    const outputTop = document.querySelector(".history");
 
     const allButtons = document.querySelectorAll('[data-type=number],[data-type=operator]');
     const numberButtons = document.querySelectorAll('[data-type=number]');
     const operatorButtons = document.querySelectorAll('[data-type=operator]');
     console.log(numberButtons);
-    formula = "hello";
+    
     // for each buttons add to input
     allButtons.forEach(button => button.addEventListener('click', (e) => {
-        const input = e.target.dataset.value;
+        const input = e.target.innerText;
         outputTop.innerText += input;
     }));
     //when operator button call operateButtons
@@ -50,9 +48,9 @@ const app = () => {
     btnCorrect.addEventListener('click', correct);
 
     function operatesButton(e) {
-        const input = e.target.dataset.value;
-        console.log("operatesButton dataset:"+input);
-        console.log("input" + input);
+        const input = e.target.innerText;
+        console.log("operatesButton dataset:" + input);
+        console.log("input" + e.target.innerText);
         if (
             outputTop.innerText.includes('+') ||
             outputTop.innerText.includes('*') ||
@@ -63,7 +61,7 @@ const app = () => {
             calc();
         }
         outputTop.innerText += input;
-
+console.log("outputTop.innerText"+outputTop.innerText);
     }
     // get value , split en fonction du operator return operate(+,1,2)
     // operate (+,1,2)
@@ -85,46 +83,46 @@ const app = () => {
         let result;
         const num1 = Number(number1);
         const num2 = Number(number2);
-        if (operator == "/") {
+        if (operator === "divide") {
             // impossible to divide by 0
             if (num2 === 0) {
                 return null;
             }
             result = num1 / num2;
         }
-        if (operator == "*") {
+        if (operator === "multiply") {
             result = num1 * num2;
         }
-        if (operator == "+") {
+        if (operator === "add") {
             result = num1 + num2;
         }
-        if (operator == "-") {
+        if (operator === "substract") {
             result = num1 - num2;
         }
         return result;
     }
     function getValue(formula) {
-        console.log("formula:"+formula);
+        console.log("formula:" + formula);
         if (formula.includes('+')) {
             const splitvalues = formula.split('+');
-            
-            return operate('+', splitvalues[0], splitvalues[1]);
+
+            return operate('add', splitvalues[0], splitvalues[1]);
 
         }
         if (formula.includes('*')) {
             const splitvalues = formula.split('*');
-            
-            return operate('*', splitvalues[0], splitvalues[1]);
+
+            return operate('multiply', splitvalues[0], splitvalues[1]);
         }
         if (formula.includes('-')) {
             const splitvalues = formula.split('-');
-            
-            return operate('-', splitvalues[0], splitvalues[1]);
+
+            return operate('substract', splitvalues[0], splitvalues[1]);
         }
         if (formula.includes('/')) {
             const splitvalues = formula.split('/');
-            
-            return operate('/', splitvalues[0], splitvalues[1]);
+
+            return operate('divide', splitvalues[0], splitvalues[1]);
         }
 
     }
@@ -133,13 +131,13 @@ const app = () => {
         outputTop.innerText = "";
         output.innerText = "";
         console.log("clear");
-    }    
+    }
     function correct() {
-        if(outputTop.innerText.length>0){
+        if (outputTop.innerText.length > 0) {
             outputTop.innerText = outputTop.innerText.slice(0, -1);
         }
-        
-        
+
+
         console.log("correct");
     }
 

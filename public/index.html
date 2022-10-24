@@ -21,10 +21,8 @@
         <div class="calculator">
             
             <div id="display" class="display">
-                <div class="last-output"></div>
-                <div class="output">
-                    <div class="result"></div>
-                </div>
+                <div class="history"></div>
+                <div class="output"></div>
             </div>
             <div class="buttons">
                 <button id="clear" data-type="clear" class="btn-clear"></button>
@@ -44,12 +42,12 @@
 
                 <button id="plus-minus" data-value="" data-type="operator" disabled>+/-</button>
                 <button id="percentage" data-type="operator" disabled>%</button>
-                <button id="decimal" data-type="operator" disabled>.</button>
+                <button id="decimal"  data-value="decimal" data-type="decimal" disabled>.</button>
                 <button id="power" data-type="operator" disabled>x²</button>
-                <button id="divide" data-value="/" data-type="operator">/</button>
-                <button id="multiply" data-value="*" data-type="operator">*</button>
-                <button id="minus" data-value="-" data-type="operator">-</button>
-                <button id="plus" data-value="+" data-type="operator">+</button>
+                <button id="divide" data-value="divide" data-type="operator">/</button>
+                <button id="multiply" data-value="multiply" data-type="operator">*</button>
+                <button id="minus" data-value="substract" data-type="operator">-</button>
+                <button id="plus" data-value="add" data-type="operator">+</button>
 
                 <button id="equal" data-type="equal">=</button>
             </div>

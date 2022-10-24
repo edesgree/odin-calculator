@@ -14,13 +14,12 @@ $font: "Kalam", cursive;
 $border-radius: 10px;
 body {
     align-items: center;
-    background-color: #4158D0;
-    background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+    background-color: #4158d0;
+    background-image: linear-gradient(43deg, #4158d0 0%, #c850c0 46%, #ffcc70 100%);
     color: $bright;
     display: flex;
     flex-direction: column;
     font-family: $font;
-
 }
 
 *,
@@ -43,8 +42,15 @@ main {
             min-height: 1.5em;
             padding: 4px 8px;
             text-align: right;
-            .last-output{
-                font-size: .5em;
+            .output {
+                height: 40px;
+                line-height: 40px;
+                vertical-align: middle;
+            }
+            .history {
+                font-size: 0.5em;
+                height: 30px;
+                line-height: 1.5em;
                 text-align: left;
             }
         }
@@ -168,8 +174,8 @@ button,
         box-shadow: none;
         top: 0.375em;
     }
-    &:disabled{
-        background:grey;
+    &:disabled {
+        background: grey;
     }
 }
 @media only screen and (max-width: 700px) {
