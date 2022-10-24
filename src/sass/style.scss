@@ -7,18 +7,20 @@ $dark: #323031;
 $bright: #ffd43b;
 $bright2: #ca2f2f;
 $main: #084c61;
-$main2: #177e89;
+$main2: #cfc8ea85;
 $grid: #ccc;
 $light: #fff;
 $font: "Kalam", cursive;
 $border-radius: 10px;
 body {
     align-items: center;
-    background-color: $dark;
+    background-color: #4158D0;
+    background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
     color: $bright;
     display: flex;
     flex-direction: column;
     font-family: $font;
+
 }
 
 *,
@@ -37,10 +39,14 @@ main {
             background-color: $dark;
             border-radius: $border-radius;
             font-size: 3em;
-            //height: 1.5em;
             margin-bottom: 20px;
+            min-height: 1.5em;
             padding: 4px 8px;
             text-align: right;
+            .last-output{
+                font-size: .5em;
+                text-align: left;
+            }
         }
         .buttons {
             display: grid;
