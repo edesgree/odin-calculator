@@ -48,11 +48,9 @@ const app = () => {
         // save the keytype in a dataset on #calculator
         calculator.dataset.previousKeyType = button.dataset.type;
         if (key.dataset.type === "number") {
-            console.log("click a nuumber");
-            console.log("previousKeyType" + previousKeyType);
-
-            if (displayedNum === '0' || previousKeyType === 'operator') {
-                console.log("displayedNum is 0");
+           
+            if (displayedNum === '0' || previousKeyType === 'operator' || previousKeyType === 'calculate') {
+                //console.log("displayedNum is 0");
                 display.textContent = keyContent;
             } else {
 
@@ -66,15 +64,15 @@ const app = () => {
         }
 
         if (action === 'decimal') {
-            console.log("decimal");
-            console.log("displayedNum" + displayedNum);
-            console.log("previousKeyType" + previousKeyType);
+            // console.log("decimal");
+            // console.log("displayedNum" + displayedNum);
+            // console.log("previousKeyType" + previousKeyType);
             if (!displayedNum.includes('.')) {
                 display.textContent = displayedNum + '.';
-                console.log("oula")
+                
             }
-            if (previousKeyType === 'operator') {
-                console.log("hey");
+            if (previousKeyType === 'operator' || previousKeyType === 'calculate') {
+                
                 display.textContent = '0.';
             }
 
@@ -87,10 +85,17 @@ const app = () => {
             const secondValue = displayedNum
 
             // Note: It's sufficient to check for firstValue and operator because secondValue always exists
-            if (firstValue && operator && previousKeyType!== 'operator') {
+            if (firstValue && operator && previousKeyType !== 'operator' && previousKeyType !== 'calculate') {
                 const calcValue = operate(operator, firstValue, secondValue);
-                
+
                 display.textContent = calcValue;
+
+                //update calculated value as firstValue
+                calculator.dataset.firstValue = calcValue;
+            } else {
+                // if the are no calculations, set displayedNum as the first value
+                calculator.dataset.firstValue = displayedNum;
+
             }
             // add custom attribute to calculator
             key.classList.add('active');
@@ -103,10 +108,18 @@ const app = () => {
         //calculate
         if (action === 'calculate') {
             console.log('calculate!');
-            const firstValue = calculator.dataset.firstValue;
+            let firstValue = calculator.dataset.firstValue;
             const operator = calculator.dataset.operator;
-            const secondValue = displayedNum;
-            display.textContent = operate(operator, firstValue, secondValue);
+            let secondValue = displayedNum;
+            if (firstValue) {
+                if (previousKeyType === 'calculate') {
+                    firstValue = displayedNum;
+                    secondValue = calculator.dataset.modValue;
+                }
+                display.textContent = operate(operator, firstValue, secondValue);
+            }
+            // set modValue attribute
+            calculator.dataset.modValue = secondValue;
 
         }
     }));
@@ -134,7 +147,7 @@ const app = () => {
     //     console.log("outputTop.innerText" + outputTop.innerText);
     // }
 
-    
+
 
     // function calc() {
     //     //arrondi le result
@@ -149,8 +162,9 @@ const app = () => {
 
     // }
 
+    // do the math between 2 numbers
     function operate(operator, number1, number2) {
-        let result;
+
         const num1 = Number(number1);
         const num2 = Number(number2);
         if (operator === "divide") {
@@ -158,16 +172,17 @@ const app = () => {
             if (num2 === 0) {
                 return null;
             }
-            result = num1 / num2;
-        } else if (operator === "multiply") {
-            result = num1 * num2;
-        } else if (operator === "add") {
-            result = num1 + num2;
-        } else if (operator === "substract") {
-            result = num1 - num2;
+            return num1 / num2;
         }
-        //result =Math.floor(result * 10000) / 10000
-        return result;
+        if (operator === "multiply") {
+            return num1 * num2;
+        }
+        if (operator === "add") {
+            return num1 + num2;
+        }
+        if (operator === "substract") {
+            return num1 - num2;
+        }
     }
 
     // function getValue(formula) {
@@ -199,11 +214,15 @@ const app = () => {
     function clear() {
         outputTop.innerText = "";
         display.innerText = "0";
+        delete calculator.dataset.firstValue;
+        delete calculator.dataset.previousKeyType;
+        delete calculator.dataset.operator;
+        delete calculator.dataset.modValue;
         console.log("clear");
     }
     function correct() {
-        if (outputTop.innerText.length > 0) {
-            outputTop.innerText = outputTop.innerText.slice(0, -1);
+        if (display.innerText.length > 0) {
+            display.innerText = display.innerText.slice(0, -1);
         }
 
 
