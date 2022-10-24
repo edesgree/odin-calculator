@@ -22,7 +22,7 @@ const app = () => {
     // const btnDivide = document.getElementById('divide');
     // const btnPercentage = document.getElementById('percentage');
     // const btnPlusMinus = document.getElementById('plus-minus');
-    // const btnCorrect = document.getElementById('correct');
+     const btnCorrect = document.getElementById('correct');
     const btnClear = document.getElementById('clear');
     // const btnDecimal = document.getElementById('decimal');
     // const btnPower = document.getElementById('power');
@@ -47,6 +47,7 @@ const app = () => {
 
     btnEqual.addEventListener('click', calc);
     btnClear.addEventListener('click', clear);
+    btnCorrect.addEventListener('click', correct);
 
     function operatesButton(e) {
         const input = e.target.dataset.value;
@@ -132,6 +133,14 @@ const app = () => {
         outputTop.innerText = "";
         output.innerText = "";
         console.log("clear");
+    }    
+    function correct() {
+        if(outputTop.innerText.length>0){
+            outputTop.innerText = outputTop.innerText.slice(0, -1);
+        }
+        
+        
+        console.log("correct");
     }
 
     console.log(operate('+', 2, 3));
