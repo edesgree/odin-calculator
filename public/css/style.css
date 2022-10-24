@@ -32,8 +32,6 @@ main .calculator .display {
   text-align: right;
 }
 main .calculator .display .output {
-  height: 40px;
-  line-height: 40px;
   vertical-align: middle;
 }
 main .calculator .display .history {

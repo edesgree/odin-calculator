@@ -8,16 +8,13 @@ const app = () => {
 
     const btnCorrect = document.getElementById('correct');
     const btnClear = document.getElementById('clear');
-    // const btnDecimal = document.getElementById('decimal');
-    // const btnPower = document.getElementById('power');
-    const btnEqual = document.getElementById('equal');
+
 
     const display = document.querySelector(".output");
-    const outputTop = document.querySelector(".history");
 
     const allButtons = document.querySelectorAll('#calculator button');
-    const numberButtons = document.querySelectorAll('[data-type=number]');
-    console.log(numberButtons);
+
+
 
     // for each buttons add to input
     allButtons.forEach(button => button.addEventListener('click', (e) => {
@@ -114,40 +111,47 @@ const app = () => {
             operator,
             modValue,
             previousKeyType
-          } = calculator.dataset
+        } = calculator.dataset
         // save the keytype in a dataset on #calculator
         calculator.dataset.previousKeyType = keyType;
 
-        if (keyType === 'number') { /* ... */ }
-        if (keyType === 'decimal') { /* ... */ }
         if (keyType === 'operator') {
-            
-
             calculator.dataset.operator = key.dataset.action;
 
             // Note: It's sufficient to check for firstValue and operator because secondValue always exists
-
             calculator.dataset.firstValue =
                 (firstValue && operator && previousKeyType !== 'operator' && previousKeyType !== 'calculate')
                     //update calculated value as firstValue
                     ? calcValue
                     // if the are no calculations, set displayedNum as the first value
                     : displayedNum;
-
         }
-        if (keyType === 'clear') { /* ... */ }
+
         if (keyType === 'calculate') {
-            
+
             let secondValue = displayedNum;
             if (firstValue) {
-                
-                    secondValue = calculator.dataset.modValue;
-                
+                secondValue = calculator.dataset.modValue;
             }
             // set modValue attribute
             calculator.dataset.modValue = secondValue;
+        }
 
-
+        if (keyType === 'clear') {
+            display.innerText = "0";
+            delete calculator.dataset.firstValue;
+            delete calculator.dataset.previousKeyType;
+            delete calculator.dataset.operator;
+            delete calculator.dataset.modValue;
+            console.log("clear");
+        }
+        if (keyType === 'correct') {
+            console.log("displayedNum.length "+displayedNum.length );
+            if (displayedNum.length > 1) {
+                display.innerText = displayedNum.substring(0, displayedNum.length - 1);
+            }else{
+                display.innerText = 0;
+            }
         }
     }
     const updateVisualState = (key, calculator) => {
@@ -162,8 +166,8 @@ const app = () => {
     //operatorButtons.forEach(button => button.addEventListener('click', operatesButton));
 
     // btnEqual.addEventListener('click', calc);
-    btnClear.addEventListener('click', clear);
-    btnCorrect.addEventListener('click', correct);
+    //btnClear.addEventListener('click', clear);
+    //btnCorrect.addEventListener('click', correct);
 
     // function operatesButton(e) {
     //     const input = e.target.innerText;
@@ -261,14 +265,14 @@ const app = () => {
         delete calculator.dataset.modValue;
         console.log("clear");
     }
-    function correct() {
-        if (display.innerText.length > 0) {
-            display.innerText = display.innerText.slice(0, -1);
-        }
+    // function correct() {
+    //     if (display.innerText.length > 0) {
+    //         display.innerText = display.innerText.slice(0, -1);
+    //     }
 
 
-        console.log("correct");
-    }
+    //     console.log("correct");
+    // }
 
     console.log(operate('+', 2, 3));
     console.log(operate('/', 2, 3));
