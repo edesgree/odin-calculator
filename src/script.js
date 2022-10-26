@@ -8,10 +8,7 @@ const app = () => {
     // for each buttons add to input
     allButtons.forEach(button => button.addEventListener('click', (e) => {
         const key = e.target;
-        const action = key.dataset.action;
-        const keyContent = key.textContent;
         const displayedNum = display.textContent;
-        const previousKeyType = calculator.dataset.previousKeyType;
         // call function to display result in screen
         const resultString = createResultString(key, displayedNum, calculator.dataset);
 
@@ -98,7 +95,6 @@ const app = () => {
         const {
             firstValue,
             operator,
-            modValue,
             previousKeyType
         } = calculator.dataset
         // save the keytype in a dataset on #calculator
@@ -141,7 +137,6 @@ const app = () => {
             delete calculator.dataset.previousKeyType;
             delete calculator.dataset.operator;
             delete calculator.dataset.modValue;
-            console.log("clear");
         }
         if (keyType === 'correct') {
             if (displayedNum.length > 1) {
@@ -184,7 +179,7 @@ const app = () => {
     // keyboard support
     // we listen to key typing and we simulate a click corresponding to the good button
     document.addEventListener('keydown', (e) => {
-        console.log("e.key"+e.key);
+        
         const listOperators = {
             '/': 'divide',
             'x': 'multiply',
@@ -200,27 +195,23 @@ const app = () => {
         }
         // check if key pressed is an operator
         if (['/','x','*','-','+','%'].includes(e.key)) {
-            console.log(listOperators[e.key]);
             document.querySelector(`[data-action="${listOperators[e.key]}"]`).click();
         }
         // check if key pressed is decimal
         if(e.key==='.'){
-            console.log("decimal"+e.key);
-            document.querySelector(`[data-action="decimal"]`).click();
+            document.querySelector('[data-action="decimal"]').click();
         }
         // check if key pressed is enter
         if(e.key==='Enter'||e.key==='='){
-            console.log("enter");
-            document.querySelector(`[data-action="calculate"]`).click();
+            document.querySelector('[data-action="calculate"]').click();
         }
-        // check if key pressed is C for clear or Delete
+        // check if key pressed is C for clear or Delete5
         if(e.key==='Delete'||e.key==='c'){
-            console.log("clear");
-            document.querySelector(`[data-action="clear"]`).click();
+            document.querySelector('[data-action="clear"]').click();
         }
         // check if key pressed is Backspace for correction
         if(e.key==='Backspace'){
-            document.querySelector(`[data-action="correct"]`).click();
+            document.querySelector('[data-action="correct"]').click();
         }
     });
 }
