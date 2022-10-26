@@ -18,7 +18,7 @@ const app = () => {
         // update state of calculator and visual
         display.textContent = resultString;
         updateCalculatorState(key, calculator, resultString, displayedNum);
-        updateVisualState(key, calculator,displayedNum);
+        updateVisualState(key, calculator, displayedNum);
     }));
 
     // function to key type of button clicked
@@ -42,7 +42,6 @@ const app = () => {
         const keyContent = key.textContent;
         const modValue = state.modValue;
         const previousKeyType = state.previousKeyType;
-
 
         // if click on number
         if (keyType === 'number') {
@@ -126,11 +125,10 @@ const app = () => {
             // set modValue attribute
             calculator.dataset.modValue = secondValue;
         }
-
-    
     }
+
     // a function to update the visual aspect of the calculator
-    const updateVisualState = (key, calculator,displayedNum) => {
+    const updateVisualState = (key, calculator, displayedNum) => {
         const keyType = getKeyType(key);
         // remove active state on operator btn
         Array.from(key.parentNode.children).forEach(k => k.classList.remove('active'));
@@ -147,14 +145,14 @@ const app = () => {
         }
         if (keyType === 'correct') {
             if (displayedNum.length > 1) {
+                // remove last digit of number displayed
                 display.innerText = displayedNum.substring(0, displayedNum.length - 1);
-            }else{
+            } else {
+                // if we correct on the last number, we display then 0
                 display.innerText = 0;
             }
         }
     }
-
-    
 
     // a function to do the math between 2 numbers
     function operate(operator, number1, number2) {
@@ -164,8 +162,6 @@ const app = () => {
         const decToRound = 9;
         let result = "";
         if (operator === "divide") {
-
-
             // impossible to divide by 0
             if (num2 === 0) {
                 return null;
@@ -185,6 +181,48 @@ const app = () => {
         return Math.round(result * Math.pow(10, decToRound)) / Math.pow(10, decToRound);
     }
 
+    // keyboard support
+    // we listen to key typing and we simulate a click corresponding to the good button
+    document.addEventListener('keydown', (e) => {
+        console.log("e.key"+e.key);
+        const listOperators = {
+            '/': 'divide',
+            'x': 'multiply',
+            '*': 'multiply',
+            '+': 'add',
+            '-': 'substract',
+            '%': 'percentage'
+        }
+        // check for key number 
+        if (!isNaN(e.key) && e.key !== ' ') {
+            
+            document.querySelector(`[data-value="${e.key}"]`).click();
+        }
+        // check if key pressed is an operator
+        if (['/','x','*','-','+','%'].includes(e.key)) {
+            console.log(listOperators[e.key]);
+            document.querySelector(`[data-action="${listOperators[e.key]}"]`).click();
+        }
+        // check if key pressed is decimal
+        if(e.key==='.'){
+            console.log("decimal"+e.key);
+            document.querySelector(`[data-action="decimal"]`).click();
+        }
+        // check if key pressed is enter
+        if(e.key==='Enter'||e.key==='='){
+            console.log("enter");
+            document.querySelector(`[data-action="calculate"]`).click();
+        }
+        // check if key pressed is C for clear or Delete
+        if(e.key==='Delete'||e.key==='c'){
+            console.log("clear");
+            document.querySelector(`[data-action="clear"]`).click();
+        }
+        // check if key pressed is Backspace for correction
+        if(e.key==='Backspace'){
+            document.querySelector(`[data-action="correct"]`).click();
+        }
+    });
 }
 
 //play app
