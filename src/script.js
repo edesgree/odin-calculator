@@ -20,18 +20,22 @@ const app = () => {
         updateCalculatorState(key, calculator, resultString, displayedNum);
         updateVisualState(key, calculator,displayedNum);
     }));
+
+    // function to key type of button clicked
     const getKeyType = (key) => {
         const { action } = key.dataset
         if (!action) return 'number'
         if (
             action === 'add' ||
-            action === 'subtract' ||
+            action === 'substract' ||
             action === 'multiply' ||
             action === 'divide'
         ) return 'operator'
         // For everything else, return the action
         return action
     }
+
+    // function to display on screen the good element in context to the button used (a number, a decimal, a result of calculate)
     const createResultString = (key, displayedNum, state) => {
         const keyType = getKeyType(key);
 
@@ -88,6 +92,7 @@ const app = () => {
             }
         }
     }
+    // function to update the values in memory
     const updateCalculatorState = (key, calculator, calcValue, displayedNum) => {
 
         const keyType = getKeyType(key);
@@ -124,6 +129,7 @@ const app = () => {
 
     
     }
+    // a function to update the visual aspect of the calculator
     const updateVisualState = (key, calculator,displayedNum) => {
         const keyType = getKeyType(key);
         // remove active state on operator btn
@@ -150,12 +156,12 @@ const app = () => {
 
     
 
-    // do the math between 2 numbers
+    // a function to do the math between 2 numbers
     function operate(operator, number1, number2) {
 
         const num1 = Number(number1);
         const num2 = Number(number2);
-        const decToRound = 12;
+        const decToRound = 9;
         let result = "";
         if (operator === "divide") {
 
