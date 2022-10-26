@@ -19,6 +19,7 @@ body {
 main .calculator {
   background: rgba(207, 200, 234, 0.5215686275);
   border-radius: 10px;
+  margin-bottom: 20px;
   padding: 2em;
   width: 400px;
 }
@@ -45,7 +46,8 @@ main .calculator .buttons {
   display: grid;
   font-size: 20px;
   grid-gap: 10px;
-  grid-template: "clear correct power divide" "seven eigth nine multiply" "four five six substract" "one two three add" "plus-minus zero decimal equal";
+  grid-template: "clear correct plus-minus divide" "seven eigth nine multiply" "four five six substract" "one two three add" "zero decimal calculate calculate";
+  grid-template-rows: auto;
   height: 350px;
 }
 main .calculator .buttons button {
@@ -96,8 +98,8 @@ main .calculator .buttons button#number-9 {
 main .calculator .buttons button#decimal {
   grid-area: decimal;
 }
-main .calculator .buttons button#equal {
-  grid-area: equal;
+main .calculator .buttons button#calculate {
+  grid-area: calculate;
 }
 main .calculator .buttons button#add {
   grid-area: add;
@@ -158,6 +160,7 @@ button:active,
 button:disabled,
 .btn:disabled {
   background: grey;
+  display: none;
 }
 button.active,
 .btn.active {

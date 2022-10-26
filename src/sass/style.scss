@@ -32,6 +32,7 @@ main {
     .calculator {
         background: $main2;
         border-radius: $border-radius;
+        margin-bottom: 20px;
         padding: 2em;
         width: 400px;
         .display {
@@ -58,11 +59,14 @@ main {
             font-size: 20px;
             grid-gap: 10px;
             grid-template:
-                "clear correct power divide"
+                "clear correct plus-minus divide"
                 "seven eigth nine multiply"
                 "four five six substract"
                 "one two three add"
-                "plus-minus zero decimal equal";
+                "zero decimal calculate calculate";
+                //grid-template-columns: 50px 50px 50px 50px;
+            grid-template-rows: auto;
+
             height: 350px;
             // grid-template-columns: repeat(4, 1fr);
             button {
@@ -113,8 +117,9 @@ main {
                 &#decimal {
                     grid-area: decimal;
                 }
-                &#equal {
-                    grid-area: equal;
+                &#calculate {
+                    grid-area: calculate;
+                    //grid-column: 1/span 2;
                 }
                 &#add {
                     grid-area: add;
@@ -175,6 +180,7 @@ button,
     }
     &:disabled {
         background: grey;
+        display: none;
     }
     &.active{
         background: lighten($bright, 20%);
