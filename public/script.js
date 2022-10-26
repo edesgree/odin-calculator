@@ -28,6 +28,7 @@ const app = () => {
             action === 'multiply' ||
             action === 'divide'
         ) return 'operator'
+
         // For everything else, return the action
         return action
     }
@@ -59,7 +60,12 @@ const app = () => {
             }
             return displayedNum
         }
-
+        // Change sign
+        if (keyType === 'change') {
+            if (displayedNum > 0) return -Math.abs(displayedNum)
+            if (displayedNum < 0) return Math.abs(displayedNum)
+            return displayedNum
+        }
         // operator buttons
         if (keyType === 'operator') {
             const firstValue = calculator.dataset.firstValue
@@ -179,7 +185,7 @@ const app = () => {
     // keyboard support
     // we listen to key typing and we simulate a click corresponding to the good button
     document.addEventListener('keydown', (e) => {
-        
+
         const listOperators = {
             '/': 'divide',
             'x': 'multiply',
@@ -190,27 +196,27 @@ const app = () => {
         }
         // check for key number 
         if (!isNaN(e.key) && e.key !== ' ') {
-            
+
             document.querySelector(`[data-value="${e.key}"]`).click();
         }
         // check if key pressed is an operator
-        if (['/','x','*','-','+','%'].includes(e.key)) {
+        if (['/', 'x', '*', '-', '+', '%'].includes(e.key)) {
             document.querySelector(`[data-action="${listOperators[e.key]}"]`).click();
         }
         // check if key pressed is decimal
-        if(e.key==='.'){
+        if (e.key === '.') {
             document.querySelector('[data-action="decimal"]').click();
         }
         // check if key pressed is enter
-        if(e.key==='Enter'||e.key==='='){
+        if (e.key === 'Enter' || e.key === '=') {
             document.querySelector('[data-action="calculate"]').click();
         }
         // check if key pressed is C for clear or Delete5
-        if(e.key==='Delete'||e.key==='c'){
+        if (e.key === 'Delete' || e.key === 'c') {
             document.querySelector('[data-action="clear"]').click();
         }
         // check if key pressed is Backspace for correction
-        if(e.key==='Backspace'){
+        if (e.key === 'Backspace') {
             document.querySelector('[data-action="correct"]').click();
         }
     });
