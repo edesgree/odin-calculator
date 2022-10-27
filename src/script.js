@@ -3,19 +3,20 @@ const app = () => {
     // UI elememts
 
     const display = document.querySelector(".output");
-    const allButtons = document.querySelectorAll('#calculator button');
+    const mycalc = document.querySelector("#mycalculator");
+    const allButtons = document.querySelectorAll('#mycalculator button');
 
     // for each buttons add to input
     allButtons.forEach(button => button.addEventListener('click', (e) => {
         const key = e.target;
-        const displayedNum = display.textContent;
+        const currentNum = display.textContent;
         // call function to display result in screen
-        const resultString = createResultString(key, displayedNum, calculator.dataset);
+        const resultToDisplay = createResultToDisplay(key, currentNum, mycalc.dataset);
 
         // update state of calculator and visual
-        display.textContent = resultString;
-        updateCalculatorState(key, calculator, resultString, displayedNum);
-        updateVisualState(key, calculator, displayedNum);
+        display.textContent = resultToDisplay;
+        updateCalcLogic(key, mycalc, resultToDisplay, currentNum);
+        updateLook(key, mycalc, currentNum);
     }));
 
     // function to key type of button clicked
@@ -35,94 +36,92 @@ const app = () => {
     }
 
     // function to display on screen the good element in context to the button used (a number, a decimal, a result of calculate)
-    const createResultString = (key, displayedNum, state) => {
+    const createResultToDisplay = (key, currentNum, state) => {
         const keyType = getKeyType(key);
 
         const keyContent = key.textContent;
         const modValue = state.modValue;
-        const previousKeyType = state.previousKeyType;
+        const prevKeyType = state.prevKeyType;
 
         // if click on number
         if (keyType === 'number') {
-            return (displayedNum === '0' ||
-                previousKeyType === 'operator' ||
-                previousKeyType === 'calculate')
+            return (currentNum === '0' ||
+                prevKeyType === 'operator' ||
+                prevKeyType === 'calculate')
                 ? keyContent
-                : displayedNum + keyContent;
+                : currentNum + keyContent;
         }
 
         // if decimal button
         if (keyType === 'decimal') {
-            if (!displayedNum.includes('.')) {
-                return displayedNum + '.';
+            if (!currentNum.includes('.')) {
+                return currentNum + '.';
             }
-            if (previousKeyType === 'operator' || previousKeyType === 'calculate') {
+            if (prevKeyType === 'operator' || prevKeyType === 'calculate') {
                 return '0.';
             }
-            return displayedNum
+            return currentNum
         }
         // Change sign
         if (keyType === 'change') {
-            if (displayedNum > 0) return -Math.abs(displayedNum)
-            if (displayedNum < 0) return Math.abs(displayedNum)
-            return displayedNum
+            if (currentNum > 0) return -Math.abs(currentNum)
+            if (currentNum < 0) return Math.abs(currentNum)
+            return currentNum
         }
         // operator buttons
         if (keyType === 'operator') {
-            const firstValue = calculator.dataset.firstValue
-            const operator = calculator.dataset.operator
+            const firstValue = mycalc.dataset.firstValue
+            const operator = mycalc.dataset.operator
 
             // Note: It's sufficient to check for firstValue and operator because secondValue always exists
             return firstValue &&
                 operator &&
-                previousKeyType !== 'operator' &&
-                previousKeyType !== 'calculate'
-                ? operate(operator, firstValue, displayedNum)
-                : displayedNum;
+                prevKeyType !== 'operator' &&
+                prevKeyType !== 'calculate'
+                ? operate(operator, firstValue, currentNum)
+                : currentNum;
         }
 
         // calculate button
         if (keyType === 'calculate') {
-            let firstValue = calculator.dataset.firstValue;
-            const operator = calculator.dataset.operator;
-            let secondValue = displayedNum;
+            let firstValue = mycalc.dataset.firstValue;
+            const operator = mycalc.dataset.operator;
+            let secondValue = currentNum;
             if (firstValue) {
-                return (previousKeyType === 'calculate')
-                    ? operate(operator, displayedNum, modValue)
-                    : operate(operator, firstValue, displayedNum)
+                return (prevKeyType === 'calculate')
+                    ? operate(operator, currentNum, modValue)
+                    : operate(operator, firstValue, currentNum)
             } else {
-                return displayedNum;
+                return currentNum;
             }
         }
     }
     // function to update the values in memory
-    const updateCalculatorState = (key, calculator, calcValue, displayedNum) => {
+    const updateCalcLogic = (key, calculator, calcValue, currentNum) => {
 
         const keyType = getKeyType(key);
         const {
             firstValue,
             operator,
-            previousKeyType
+            prevKeyType
         } = calculator.dataset
-        // save the keytype in a dataset on #calculator
-        calculator.dataset.previousKeyType = keyType;
-
+        // save the keytype in a dataset on #calculator.dataset.prevKeyType = keyType;
+        calculator.dataset.prevKeyType = keyType;
         if (keyType === 'operator') {
-            console.log('operator');
             calculator.dataset.operator = key.dataset.action;
 
             // Note: It's sufficient to check for firstValue and operator because secondValue always exists
             calculator.dataset.firstValue =
-                (firstValue && operator && previousKeyType !== 'operator' && previousKeyType !== 'calculate')
+                (firstValue && operator && prevKeyType !== 'operator' && prevKeyType !== 'calculate')
                     //update calculated value as firstValue
                     ? calcValue
-                    // if the are no calculations, set displayedNum as the first value
-                    : displayedNum;
+                    // if the are no calculations, set currentNum as the first value
+                    : currentNum;
         }
 
         if (keyType === 'calculate') {
 
-            let secondValue = displayedNum;
+            let secondValue = currentNum;
             if (firstValue) {
                 secondValue = calculator.dataset.modValue;
             }
@@ -132,7 +131,7 @@ const app = () => {
     }
 
     // a function to update the visual aspect of the calculator
-    const updateVisualState = (key, calculator, displayedNum) => {
+    const updateLook = (key, calculator, currentNum) => {
         const keyType = getKeyType(key);
         // remove active state on operator btn
         Array.from(key.parentNode.children).forEach(k => k.classList.remove('active'));
@@ -142,14 +141,14 @@ const app = () => {
         if (keyType === 'clear') {
             display.innerText = "0";
             delete calculator.dataset.firstValue;
-            delete calculator.dataset.previousKeyType;
+            delete calculator.dataset.prevKeyType;
             delete calculator.dataset.operator;
             delete calculator.dataset.modValue;
         }
         if (keyType === 'correct') {
-            if (displayedNum.length > 1) {
+            if (currentNum.length > 1) {
                 // remove last digit of number displayed
-                display.innerText = displayedNum.substring(0, displayedNum.length - 1);
+                display.innerText = currentNum.substring(0, currentNum.length - 1);
             } else {
                 // if we correct on the last number, we display then 0
                 display.innerText = 0;

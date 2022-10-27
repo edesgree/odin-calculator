@@ -16,14 +16,14 @@ body {
   box-sizing: border-box;
 }
 
-main .calculator {
+main .mycalculator {
   background: rgba(207, 200, 234, 0.5215686275);
   border-radius: 10px;
   margin-bottom: 20px;
   padding: 2em;
   width: 400px;
 }
-main .calculator .display {
+main .mycalculator .display {
   background-color: #323031;
   border-radius: 10px;
   font-size: 3em;
@@ -33,16 +33,16 @@ main .calculator .display {
   padding: 4px 8px;
   text-align: right;
 }
-main .calculator .display .output {
+main .mycalculator .display .output {
   vertical-align: middle;
 }
-main .calculator .display .history {
+main .mycalculator .display .history {
   font-size: 0.5em;
   height: 30px;
   line-height: 1.5em;
   text-align: left;
 }
-main .calculator .buttons {
+main .mycalculator .buttons {
   display: grid;
   font-size: 20px;
   grid-gap: 10px;
@@ -50,82 +50,82 @@ main .calculator .buttons {
   grid-template-rows: auto;
   height: 350px;
 }
-main .calculator .buttons button {
+main .mycalculator .buttons button {
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
   font-size: 21px;
   /* Buttons positions */
 }
-main .calculator .buttons button.btn-clear {
+main .mycalculator .buttons button.btn-clear {
   background-image: url("../images/delete.svg");
   background-size: 28px;
 }
-main .calculator .buttons button.btn-correct {
+main .mycalculator .buttons button.btn-correct {
   background-image: url("../images/correction.svg");
   background-size: 38px;
 }
-main .calculator .buttons button#number-0 {
+main .mycalculator .buttons button#number-0 {
   grid-area: zero;
 }
-main .calculator .buttons button#number-1 {
+main .mycalculator .buttons button#number-1 {
   grid-area: one;
 }
-main .calculator .buttons button#number-2 {
+main .mycalculator .buttons button#number-2 {
   grid-area: two;
 }
-main .calculator .buttons button#number-3 {
+main .mycalculator .buttons button#number-3 {
   grid-area: three;
 }
-main .calculator .buttons button#number-4 {
+main .mycalculator .buttons button#number-4 {
   grid-area: four;
 }
-main .calculator .buttons button#number-5 {
+main .mycalculator .buttons button#number-5 {
   grid-area: five;
 }
-main .calculator .buttons button#number-6 {
+main .mycalculator .buttons button#number-6 {
   grid-area: six;
 }
-main .calculator .buttons button#number-7 {
+main .mycalculator .buttons button#number-7 {
   grid-area: seven;
 }
-main .calculator .buttons button#number-8 {
+main .mycalculator .buttons button#number-8 {
   grid-area: eigth;
 }
-main .calculator .buttons button#number-9 {
+main .mycalculator .buttons button#number-9 {
   grid-area: nine;
 }
-main .calculator .buttons button#decimal {
+main .mycalculator .buttons button#decimal {
   grid-area: decimal;
 }
-main .calculator .buttons button#calculate {
+main .mycalculator .buttons button#calculate {
   grid-area: calculate;
 }
-main .calculator .buttons button#add {
+main .mycalculator .buttons button#add {
   grid-area: add;
 }
-main .calculator .buttons button#substract {
+main .mycalculator .buttons button#substract {
   grid-area: substract;
 }
-main .calculator .buttons button#multiply {
+main .mycalculator .buttons button#multiply {
   grid-area: multiply;
 }
-main .calculator .buttons button#divide {
+main .mycalculator .buttons button#divide {
   grid-area: divide;
 }
-main .calculator .buttons button#power {
+main .mycalculator .buttons button#power {
   grid-area: power;
 }
-main .calculator .buttons button#correct {
+main .mycalculator .buttons button#correct {
   grid-area: correct;
 }
-main .calculator .buttons button#clear {
+main .mycalculator .buttons button#clear {
   grid-area: clear;
 }
-main .calculator .buttons button#plus-minus {
+main .mycalculator .buttons button#plus-minus {
   grid-area: plus-minus;
 }
-main .calculator .buttons button#percentage {
+main .mycalculator .buttons button#percentage {
   display: none;
   grid-area: percentage;
 }
