@@ -24,8 +24,9 @@ The project is to create a calculator in js only using HTML, CSS and Vanilla JS.
 * **Classic operators:** Possibility to calculate using simple math operators
 * **Correct and Clear buttons**
 * **Keyboard support**
-* **math power x²** (to do)
-* **adjust positive/negative** (to do)
+* **adjust positive/negative** 
+* **math power x²** 
+
 
 
 ## Outcome

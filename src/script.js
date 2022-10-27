@@ -26,7 +26,8 @@ const app = () => {
             action === 'add' ||
             action === 'substract' ||
             action === 'multiply' ||
-            action === 'divide'
+            action === 'divide' ||
+            action === 'power'
         ) return 'operator'
 
         // For everything else, return the action
@@ -107,6 +108,7 @@ const app = () => {
         calculator.dataset.previousKeyType = keyType;
 
         if (keyType === 'operator') {
+            console.log('operator');
             calculator.dataset.operator = key.dataset.action;
 
             // Note: It's sufficient to check for firstValue and operator because secondValue always exists
@@ -177,6 +179,9 @@ const app = () => {
         }
         if (operator === "substract") {
             result = num1 - num2;
+        }
+        if (operator === "power") {
+            result = Math.pow(num1, num2);
         }
         // we round the result to a certain limit so the number can be displayed on screen
         return Math.round(result * Math.pow(10, decToRound)) / Math.pow(10, decToRound);

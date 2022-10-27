@@ -59,11 +59,11 @@ main {
             font-size: 20px;
             grid-gap: 10px;
             grid-template:
-                "clear correct plus-minus divide"
+                "clear correct power divide"
                 "seven eigth nine multiply"
                 "four five six substract"
                 "one two three add"
-                "zero decimal calculate calculate";
+                "plus-minus zero decimal  calculate";
                 //grid-template-columns: 50px 50px 50px 50px;
             grid-template-rows: auto;
 
